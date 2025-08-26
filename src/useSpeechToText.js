@@ -20,7 +20,17 @@ const useSpeechToText = () => {
     }
 
     if (listening) {
-      SpeechRecognition.stopListening();
+      // 강제로 중지
+      try {
+        SpeechRecognition.abortListening();
+        // abortListening이 효과가 없으면 stopListening도 호출
+        setTimeout(() => {
+          SpeechRecognition.stopListening();
+        }, 100);
+      } catch (error) {
+        console.error("음성 인식 중지 오류:", error);
+        SpeechRecognition.stopListening();
+      }
     } else {
       try {
         // 마이크 권한 명시적 요청
@@ -47,11 +57,17 @@ const useSpeechToText = () => {
     }
   };
 
+  const forceStop = () => {
+    SpeechRecognition.abortListening();
+    SpeechRecognition.stopListening();
+  };
+
   return {
     transcript: finalTranscript,
     listening,
     toggleListening,
     resetTranscript,
+    forceStop,
   };
 };
 
