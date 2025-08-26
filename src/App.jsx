@@ -21,6 +21,17 @@ function App() {
     setInputValue("");
   };
 
+  // 페이지 로드 시 환경 체크
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      console.log("Protocol:", window.location.protocol);
+      console.log(
+        "Speech Recognition Support:",
+        "webkitSpeechRecognition" in window || "SpeechRecognition" in window
+      );
+    }
+  }, []);
+
   return (
     <div
       style={{
@@ -44,6 +55,21 @@ function App() {
         <button onClick={clearInput}>입력 내용 지우기</button>
       </div>
       {listening && <p style={{ color: "red" }}>🎤 음성 인식 중...</p>}
+
+      {/* 디버깅 정보 표시 */}
+      <div style={{ fontSize: "12px", color: "gray", marginTop: "20px" }}>
+        <p>
+          Protocol:{" "}
+          {typeof window !== "undefined" ? window.location.protocol : "N/A"}
+        </p>
+        <p>
+          Speech Recognition:{" "}
+          {typeof window !== "undefined" &&
+          ("webkitSpeechRecognition" in window || "SpeechRecognition" in window)
+            ? "지원됨"
+            : "미지원"}
+        </p>
+      </div>
     </div>
   );
 }
