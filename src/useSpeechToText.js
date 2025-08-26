@@ -24,9 +24,9 @@ const useSpeechToText = () => {
       try {
         SpeechRecognition.abortListening();
         // abortListening이 효과가 없으면 stopListening도 호출
-        setTimeout(() => {
-          SpeechRecognition.stopListening();
-        }, 100);
+        // setTimeout(() => {
+        //   SpeechRecognition.stopListening();
+        // }, 100);
       } catch (error) {
         console.error("음성 인식 중지 오류:", error);
         SpeechRecognition.stopListening();
