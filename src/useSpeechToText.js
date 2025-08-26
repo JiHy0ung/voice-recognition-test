@@ -7,37 +7,27 @@ const useSpeechToText = () => {
     useSpeechRecognition();
 
   const toggleListening = () => {
+    if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
+      alert("이 브라우저는 음성 인식을 지원하지 않습니다.");
+      return;
+    }
+
     if (listening) {
       SpeechRecognition.stopListening();
     } else {
-      // 새로운 음성인식을 시작하기 전에 transcript 리셋
       resetTranscript();
       SpeechRecognition.startListening({
         language: "ko-KR",
         continuous: true,
+        interimResults: true,
       });
     }
   };
 
-  const stopListening = () => {
-    SpeechRecognition.stopListening();
-  };
-
-  const startListening = () => {
-    resetTranscript();
-    SpeechRecognition.startListening({
-      language: "ko-KR",
-      continuous: true,
-      interimResults: true,
-    });
-  };
-
   return {
-    transcript: finalTranscript, // 최종 확정된 텍스트만 반환
+    transcript: finalTranscript,
     listening,
     toggleListening,
-    stopListening,
-    startListening,
     resetTranscript,
   };
 };
