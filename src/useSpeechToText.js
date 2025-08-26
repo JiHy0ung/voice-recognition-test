@@ -57,17 +57,11 @@ const useSpeechToText = () => {
     }
   };
 
-  const forceStop = () => {
-    SpeechRecognition.abortListening();
-    SpeechRecognition.stopListening();
-  };
-
   return {
     transcript: finalTranscript,
     listening,
     toggleListening,
     resetTranscript,
-    forceStop,
   };
 };
 

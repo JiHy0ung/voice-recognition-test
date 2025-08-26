@@ -3,8 +3,7 @@ import { useState, useEffect } from "react";
 import useSpeechToText from "./useSpeechToText";
 
 function App() {
-  const { transcript, listening, toggleListening, forceStop } =
-    useSpeechToText();
+  const { transcript, listening, toggleListening } = useSpeechToText();
   const [inputValue, setInputValue] = useState("");
 
   // transcript가 변경될 때마다 inputValue에 추가
@@ -53,14 +52,7 @@ function App() {
         <button onClick={toggleListening}>
           {listening ? "음성 인식 중지" : "음성 인식 시작"}
         </button>
-        {listening && (
-          <button
-            onClick={forceStop}
-            style={{ backgroundColor: "red", color: "white" }}
-          >
-            강제 중지
-          </button>
-        )}
+
         <button onClick={clearInput}>입력 내용 지우기</button>
       </div>
       {listening && <p style={{ color: "red" }}>🎤 음성 인식 중...</p>}
